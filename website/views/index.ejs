@@ -1,0 +1,20 @@
+<!-- web/views/index.ejs -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>YokoBot Tournaments</title>
+</head>
+<body>
+    <h1>Welcome to YokoBot Tournaments</h1>
+
+    <ul>
+        <% tournaments.forEach((tournament) => { %>
+            <li>
+                <h2><%= tournament.mode %> Tournament</h2>
+                <p>Hosted by: <%= tournament.hostName %></p>
+                <!-- Display other tournament details as needed -->
+            </li>
+        <% }); %>
+    </ul>
+</body>
+</html>

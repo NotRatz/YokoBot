@@ -1,0 +1,29 @@
+<!-- web/views/manage-tournament.ejs -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manage Tournament</title>
+</head>
+<body>
+    <h1>Manage Tournament</h1>
+
+    <h2>Edit Tournament Details</h2>
+
+    <form method="POST" action="/update-tournament/<%= tournament._id %>">
+        <label for="mode">Mode:</label>
+        <input type="text" name="mode" value="<%= tournament.mode %>" required><br>
+
+        <label for="heroPoints">Hero Points:</label>
+        <input type="checkbox" name="heroPoints" <% if (tournament.heroPoints) { %>checked<% } %>><br>
+
+        <!-- Add other tournament fields here -->
+
+        <button type="submit">Update</button>
+    </form>
+
+    <h2>Manage Teams</h2>
+
+    <!-- Display teams, allow team management -->
+
+</body>
+</html>

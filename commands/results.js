@@ -1,17 +1,27 @@
-const { MessageEmbed } = require('discord.js');
+const { CommandInteraction, MessageEmbed } = require('discord.js');
+const { Tournament } = require('../../database/models/Tournament'); // Adjust the path accordingly
 
-async function handleResultCommand(interaction) {
-    // Pull up a menu with a drop-down styled UI
-    // Fetch tournament data for selection
-    const tournaments = await Tournament.find();  // Make sure to import your Tournament model
+async function handleResultsCommand(interaction) {
+    // Fetch the list of available tournaments from the database
+    const tournaments = await Tournament.find();
 
-    // Construct the drop-down options dynamically based on the tournament data
-    // Post these results to a channel
-    const embed = new MessageEmbed()
-        .setTitle('Tournament Results')
-        .setDescription('Please select the tournament and input the results.');
-    // ... complete the embed as needed
-    await interaction.reply({ embeds: [embed] });
+    // Create a dropdown menu with tournament options
+    const dropdownOptions = tournaments.map((tournament, index) => ({
+        label: `Tournament - ${tournament.mode}`,
+        value: index.toString(),
+    }));
+
+    // Create a MessageActionRow with the dropdown menu
+    const dropdownRow = new MessageActionRow()
+        .addComponents({
+            type: 'SELECT_MENU',
+            customId: 'tournamentDropdown',
+            placeholder: 'Select a tournament',
+            options: dropdownOptions,
+        });
+
+    // Reply to the interaction with the dropdown menu
+    await interaction.reply({ content: 'Select a tournament:', components: [dropdownRow] });
 }
 
-module.exports = { handleResultCommand };
+module.exports = { handleResultsCommand };
